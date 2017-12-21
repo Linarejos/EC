@@ -174,25 +174,26 @@ Saltar a otro lugar del código si se cumple el código de condición.
 
   - Do-while
 
-      do{               loop:
-        body              body
-      }while(test)        if (test) goto loop
+        do{               loop:
+          body              body
+        }while(test)        if (test) goto loop
 
   - While, la expresión en C es while (test) { body } que lo pasamos a do while
 
-      if(!test) goto done        if (!test) goto done
-      do{                        loop:
-        body                      body
-      }while(test);               if (test) goto loop
-                                   done:
-      done:
+        if(!test) goto done        if (!test) goto done
+        do{                        loop:
+          body                      body
+        }while(test);               if (test) goto loop
+                                     done:
+        done:
 
   - For, se puede transdorma en while facilmente:
 
-      for (Init: Test; sdUpdate)          Init;
-        body                            while (test){ body; update; }
+        for (Init; Test; Update)          Init;
+          body                            while (test){ body; update; }
 
       **El init iría arriba del if(!test) y el update debajo del body**
+
       **Aunque la comparación anterior puede quitarse, la de if(!test)***
 
 ## Nivel de máquina 3 (Procedimientos)
