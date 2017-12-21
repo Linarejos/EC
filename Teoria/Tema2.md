@@ -3,15 +3,16 @@
 ## Nivel de máquina 1 (Basico)
 
 ### Procesadores Intel x86
-Arquitecturas     | Procesadores
-x86-16            | 8086, 286
-x86 / IA32        | 386, 486, Pentium
-MMX               | Pentium MMX
-SSE               | Pentium III
-SSE2              | Pentium 4
-SSE3              | Pentium 4E
-x86-64 / EM64t    | Pentium 4F, Core 2 Duo
-SSE4              | Core i7
+    Arquitecturas     | Procesadores
+    ---------------------------------
+    x86-16            | 8086, 286
+    x86 / IA32        | 386, 486, Pentium
+    MMX               | Pentium MMX
+    SSE               | Pentium III
+    SSE2              | Pentium 4
+    SSE3              | Pentium 4E
+    x86-64 / EM64t    | Pentium 4F, Core 2 Duo
+    SSE4              | Core i7
 
 ### Nueva especie Itanium
   - Itanium
@@ -173,9 +174,9 @@ Saltar a otro lugar del código si se cumple el código de condición.
 
   - Do-while
 
-    do{               loop:
-      body              body
-    }while(test)        if (test) goto loop
+      do{               loop:
+        body              body
+      }while(test)        if (test) goto loop
 
   - While, la expresión en C es while (test) { body } que lo pasamos a do while
 
@@ -183,13 +184,13 @@ Saltar a otro lugar del código si se cumple el código de condición.
       do{                        loop:
         body                      body
       }while(test);               if (test) goto loop
-                                 done:
-    done:
+                                   done:
+      done:
 
   - For, se puede transdorma en while facilmente:
 
-    for (Init: Test; sdUpdate)          Init;
-      body                            while (test){ body; update; }
+      for (Init: Test; sdUpdate)          Init;
+        body                            while (test){ body; update; }
 
       **El init iría arriba del if(!test) y el update debajo del body**
       **Aunque la comparación anterior puede quitarse, la de if(!test)***
