@@ -95,6 +95,13 @@ Hay diferentes diferencias entre las que podemos encontrar:
 
 ### Uso de los sufijos con las intrucciones
 
+    Intel         |   ASM   |   Bytes  |     C       |
+    -------------------------------------------------
+    byte          |    b    |    1     |   char      |
+    word          |    b    |    1     |   short     |
+    double word   |    b    |    1      |   int       |
+    quad word     |    b    |    1     |   long int  |
+
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ## Nivel de máquina 2 (Aritmetica Control)
@@ -182,9 +189,9 @@ Saltar a otro lugar del código si se cumple el código de condición.
 
         if(!test) goto done        if (!test) goto done
         do{                        loop:
-          body                      body
-        }while(test);               if (test) goto loop
-                                     done:
+          body                        body
+        }while(test);                 if (test) goto loop
+                                   done:
         done:
 
   - For, se puede transdorma en while facilmente:
@@ -195,6 +202,8 @@ Saltar a otro lugar del código si se cumple el código de condición.
       **El init iría arriba del if(!test) y el update debajo del body**
 
       **Aunque la comparación anterior puede quitarse, la de if(!test)***
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ## Nivel de máquina 3 (Procedimientos)
 
@@ -267,11 +276,73 @@ Los registros concretamente son:
   - %esp, %ebp forma especial de invocado-salva. Restaurados a su valor original al salir del procedimiento
 
 ### Procedimientos (x86-64)
+  - Tipos de registros:
+
+  [%raw [%eax]] --- Valor de retorno
+  [%rbw [%ebx]] --- Salva invocado
+  [%rcw [%ecx]] --- Argumento 4
+  [%rdw [%edx]] --- Argumento 3
+  [%rsi [%esi]] --- Argumento 2
+  [%rdi [%edi]] --- Argumento 1
+  [%rsp [%esp]] --- Puntero pila
+  [%rbd [%ebp]] --- Salva invocado
+  [%r8  [%r8d]] --- Argumento 5
+  [%r9  [%r9d]] --- Argumento 6
+  [%r10 [%10d]] --- Salva invocante
+  [%r11 [%11d]] --- Salva invocante
+  [%r12 [%12d]] --- Salva invocado
+  [%r13 [%13d]] --- Salva invocado
+  [%r14 [%14d]] --- Salva invocado
+  [%r15 [%15d]] --- Salva invocado
+
+Los argumentos de las funciones se pasan através de registros. Si son más de 6 enteros se pasan por pila. Estos pueden usarse también como salva-invocantes.
+
+Todas las referencias a marco de pila via puntero pila son eliminadas así no se necesita actualizar %ebp y %rbp
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ## Nivel de máquina 4 (Array/Structs)
 
-### Arrays
+### Arrays Faltan las formas de accesos
+Los arrays del mismo tipo de dato T reserva posiciones del tipo de dato T contiguas. Por ejemplo int val[5], donde la posición en formato puntero sería para la pos 0 x, para la pos 2 x+4, la 3 x+8...
+
+Los arrays anidados son matrices típicas.
+
+Son como los arrays anidados pero lo que realmente se tiene es una array de punteros a otro array.
 
 ### Estructuras
+Para las estructuras también se reserva la región contigua de memoria que referencia a miembros de la estructura mediante nombres. A diferencia de un array los datos contenidos en una estructura pueden ser de distinto tipo.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ## Nivel de máquina 5 (Alineamiento)
+
+### En estructuras
+El alineamiento de las estructuras es algo fundamental, por ejemplo, dado el siguiente struct:
+
+    struct S1{
+      char c;
+      int i[2];
+      double v;
+    }\*p
+
+Si los datos estuvieran contiguos estarían desalineados, en cambio si el final del campo reservado en memoria terminase en un múltiplo del tamaño del dato primitivo usado. En la siguiente tabla se resume para linux y windows los tamaños de alineamiento:
+
+    T de datos    | 32bits  | 64 bits | 32wbits | 64wbits
+    --------------------------------------------------------
+    char          |  1   1  |  1   1  |  1   1  |  1    1 |
+    short         |  2   2  |  2   2  |  2   2  |  2    2 |
+    int           |  4   4  |  4   4  |  4   4  |  4    4 |
+    long          |  4   4  |  8   8  |  4   4  |  4    4 |
+    long long     |  8   4  |  8   8  |  8   8  |  8    8 |
+    float         |  4   4  |  4   4  |  4   4  |  4    4 |
+    doble         |  8   4  |  8   8  |  8   8  |  8    8 |
+    long double   |  12  4  | 16  16  | 12   4  | 16   16 |
+    void *        |  4   4  |  8   8  |  4   4  |  8    8 |
+
+Para cumplir el alineamiento lo que buscamos es el dato con mayor necesidad de alineamiento así, por ejemplo en la anterior estructura S1, el alineamiento de todos los datos ha de ser 4 para linux y 8 para windows
+
+### Arrays de estructuras
+El tamaño de un array de estructuras viene determinado por la suma de los arrays infividuales pero los cuales han de estar alineados según las convecciones anteriores.
+
+Uno de los método para el ahorro de espacio con arrays y estructuras o arrays de estructuras consiste en poner primero los datos que ocupan más espacio.
