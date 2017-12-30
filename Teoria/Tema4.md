@@ -1,4 +1,4 @@
-# Tema 3 | Segmentación de cauce
+# Tema 4 | Segmentación de cauce
 
 ## Concepto de segmentación
 Consiste en subdividir el proceso general en n etapas permitidendo el solapamiento en tiempo de ejecución de diferentes instrucciones. Cada instrucción se ejecuta en una fracción del tiempo T genral.
