@@ -109,6 +109,14 @@ Clasificación según la procedencia:
     2. Desactivar interrupciones de inferior o igual prioridad.
     3. Desactivar de forma selectiva determinados niveles de interrupción
 
+### Concepto de DMA
+Ténica que permite realizar transferencias de datos entre la memoria y los dispositivos de E/S sin intervención directa del procesador. No se ejecutan isntrucciones en el procesador para realizar la transferencia. Permite transferencias a la máxima velocidad por el bus del sistema, la memoria y el periferico. En sistemas de único bus la velocidad es mucho mayor.
+
+**Métodos de control de DMA**:
+  - **Robo de ciclo**: Se roba periodicamente un ciclo o varios para que el chip del DMA (DMAC) realice transferencia de un bloque palabra a palabra.
+  - **Transferencia de bloques o para de CPU**: Se transmite un bloque, secuencia de palbras de datos, en una ráfaga continua, el DMAC toma el control del bus durante todo el periodo de la tansferencia, el procesador pues, no tiene acceso al bus hasta que esto acaba.
+  - **Intercalado o trasparente**: El DMAC toma el control del bus cando no es usado por el procesador. Para ello debe emitir las señales de control adecuadas.
+  - **Memoria multipuerto**: Existe memoria con arios modulos de dirección y de memoria que pueden operar simultaneamente, conectados a varios buses siempre que no direccionen a un mismo módulo de memoria.
 
 
 
@@ -117,4 +125,29 @@ Clasificación según la procedencia:
 
 
 
--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    -
