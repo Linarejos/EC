@@ -95,16 +95,16 @@ Clasificación según la procedencia:
   - **Vectorizadas**: término genérico se refiere a todos los esquemas en los cuales el dispositivo que solicita una interrupción suministra de algún modo la dirección de la rutina de servicio
 
 **Sistemas de prioridad de interrupciones**: En un computador con más de un dispositivo con capacidad de interrupción, hay que establecer mecanismos de prioridad que resuelvan los problemas de: interrupciones simultaneas, iterrupciones anidadas e inhibición de interrupciones.
-  1. **Simultaneas**:
+  - **Simultaneas**:
     - **Gestión de prioridades centralizada**: Cuando hay un solo dispositivo en cada línea de interrupción, la CPU acepta la solicitud que llega por la línea de mayor prioridad.
     - **Gestión de prioridades distribuida**: Varios dispositivos comparten una única línea de solicitud de interrupción.
       - **Técnica sonde o polling**: se usa para determinar por software el origen de una interrupción. Encuesta activa.
       - **Técnica daisy-chain**: El dispositivo que esté eléctricamente más cercano a la CPU tendrá la mayor prioridad.
     - **Gestión de prioridades híbrida**: Combinación de esquemas centralizado y distribuido (daisy-chain).
-  2. **Anidadas**: se produce una interrupción mientras se está atendiendo otra ¿que hacer?
+  - **Anidadas**: se produce una interrupción mientras se está atendiendo otra ¿que hacer?
     - Inhabilitar las interrupciones durante el tratamiento de la ISR.
     - Permitir que acepte una segunda solicitud si si prioridad es mayor.
-  3. **Inhibición de interrupciones**: situaciones en las que conviene evitar temporalmente que se produzcan interrupciones. Existen tres niveles:
+  - **Inhibición de interrupciones**: situaciones en las que conviene evitar temporalmente que se produzcan interrupciones. Existen tres niveles:
     1. Desactivar todas la interrupciones.
     2. Desactivar interrupciones de inferior o igual prioridad.
     3. Desactivar de forma selectiva determinados niveles de interrupción
