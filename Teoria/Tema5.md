@@ -72,16 +72,42 @@ Todos los pasos de una operación requieren la ejecución de instrucciones por e
 
 Existen dos modelos de programada que son:
   - **Sin consulta de estado**: El procesador decide en que momento se realiza la tranferencia, el disp debe e tar entonces siempre dispuesto para recibir datos o enviarlos.  
-  - **Con consulta de estado**: El porcesador pregunta al periférico atraves de una interfaz si está preparado, es parecido al concepto handshaking pero por software. 
+  - **Con consulta de estado**: El porcesador pregunta al periférico atraves de una interfaz si está preparado, es parecido al concepto handshaking pero por software.
 
+### Interrupciones
+Son bifurcaciones normalmente externas al programa, excepto las software, provocadas por diversas causas. Pueden externas, las señales provienen de fuera del procesador o internas, es el propio procesador. El objetivos es raclamar la atención de este por algún acontecimiento pidiendo que ejecute un tratamiento especifico para ello. De esta manera la ejecución del programa queda suspendida.
 
+**Causas de las interrupciones**:
+  1. Fallo hardware.
+  2. Errores del programa.
+  3. Condiciones de tiempo real.
+  4. Entrada / Salida
 
+Clasificación según la procedencia:
+  1. **Externas**: Se inicia a petición de disp. externos y pueden ser:
+    - **Enmascarable**s: Se pueden habilitar o inhibir (interrupciones E/S)
+    - **No enmascarables**: Tienen mayor prioridad que las anteriores por ejemplo, fallos del hardware externo y condiciones tiempo real.
+  2. **Internas (excepciones o traps)**: Se activan de forma interna al procesador mediante condiciones excepcionales, como errores del programa o fallo del hardare interno.
+  3. **Interrupciones software**: Las instrucciones de interrupción software se emplean para realizar llamadas al SO.
 
+**¿Cómo determinar la ISR?**
+  - **Direcciones fijas**: La dirección se fijan y definen en los circuitos del procesador.
+  - **Vectorizadas**: término genérico se refiere a todos los esquemas en los cuales el dispositivo que solicita una interrupción suministra de algún modo la dirección de la rutina de servicio
 
-
-
-
-
+**Sistemas de prioridad de interrupciones**: En un computador con más de un dispositivo con capacidad de interrupción, hay que establecer mecanismos de prioridad que resuelvan los problemas de: interrupciones simultaneas, iterrupciones anidadas e inhibición de interrupciones.
+  1. **Simultaneas**:
+    - **Gestión de prioridades centralizada**: Cuando hay un solo dispositivo en cada línea de interrupción, la CPU acepta la solicitud que llega por la línea de mayor prioridad.
+    - **Gestión de prioridades distribuida**: Varios dispositivos comparten una única línea de solicitud de interrupción.
+      - **Técnica sonde o polling**: se usa para determinar por software el origen de una interrupción. Encuesta activa.
+      - **Técnica daisy-chain**: El dispositivo que esté eléctricamente más cercano a la CPU tendrá la mayor prioridad.
+    - **Gestión de prioridades híbrida**: Combinación de esquemas centralizado y distribuido (daisy-chain).
+  2. **Anidadas**: se produce una interrupción mientras se está atendiendo otra ¿que hacer?
+    - Inhabilitar las interrupciones durante el tratamiento de la ISR.
+    - Permitir que acepte una segunda solicitud si si prioridad es mayor.
+  3. **Inhibición de interrupciones**: situaciones en las que conviene evitar temporalmente que se produzcan interrupciones. Existen tres niveles:
+    1. Desactivar todas la interrupciones.
+    2. Desactivar interrupciones de inferior o igual prioridad.
+    3. Desactivar de forma selectiva determinados niveles de interrupción
 
 
 
